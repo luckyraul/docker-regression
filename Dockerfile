@@ -9,6 +9,7 @@ RUN apt-get -qq update && \
 
 RUN curl -LsS http://codeception.com/codecept.phar -o /usr/local/bin/codecept && \
     chmod a+x /usr/local/bin/codecept && \
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     wget -N https://chromedriver.storage.googleapis.com/"$DRIVER_VERSION"/chromedriver_linux64.zip -P ~/ && \
     unzip ~/chromedriver_linux64.zip -d ~/  && \
     rm ~/chromedriver_linux64.zip  && \
