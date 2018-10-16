@@ -2,7 +2,7 @@ FROM debian:stretch
 
 MAINTAINER nikita@mygento.ru
 
-ENV DEBIAN_FRONTEND=noninteractive DRIVER_VERSION=2.42 ALLURE_VERSION=2.6.0
+ENV DEBIAN_FRONTEND=noninteractive DRIVER_VERSION=2.42 ALLURE_VERSION=2.7.0
 
 RUN apt-get -qq update && \
     apt-get install -qqy curl wget unzip gnupg git && \
