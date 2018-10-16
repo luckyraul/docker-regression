@@ -5,7 +5,7 @@ MAINTAINER nikita@mygento.ru
 ENV DEBIAN_FRONTEND=noninteractive DRIVER_VERSION=2.40 ALLURE_VERSION=2.6.0
 
 RUN apt-get -qq update && \
-    apt-get install -qqy curl wget unzip gnupg && \
+    apt-get install -qqy curl wget unzip gnupg git && \
     apt-get install -qqy php7.0-cli php7.0-mbstring php7.0-zip php7.0-curl php7.0-bcmath php7.0-xml
 
 # Install Composer
