@@ -45,7 +45,7 @@ RUN wget -O /tmp/geckodriver.tar.gz https://github.com/mozilla/geckodriver/relea
 RUN apt-get -qq update && \
     apt-get install -qqy default-jre && \
     mkdir -p /opt/allure && \
-    curl -fsSL -o allure2.zip https://dl.bintray.com/qameta/generic/io/qameta/allure/allure/"$ALLURE"/allure-"$ALLURE".zip && \
+    curl -fsSL -o allure2.zip https://dl.bintray.com/qameta/maven/io/qameta/allure/allure-commandline/"$ALLURE"/allure-commandline-"$ALLURE".zip && \
     unzip -q allure2.zip -d /opt/allure && \
     rm allure2.zip && \
     chmod a+x /opt/allure/allure-"$ALLURE"/bin/allure && \
