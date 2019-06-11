@@ -2,7 +2,7 @@ FROM debian:stretch
 
 MAINTAINER nikita@mygento.ru
 
-ENV DEBIAN_FRONTEND=noninteractive DRIVER_VERSION=2.42 ALLURE_VERSION=2.7.0
+ENV DEBIAN_FRONTEND=noninteractive FIREFOX_DRIVER=v0.24.0 CHROME_DRIVER=75.0.3770.8 ALLURE=2.12.1
 
 RUN apt-get -qq update && \
     apt-get install -qqy curl wget unzip gnupg git && \
@@ -23,7 +23,7 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
     apt-get install -qqy google-chrome-stable
 
 # Install Chrome Driver
-RUN wget -N https://chromedriver.storage.googleapis.com/"$DRIVER_VERSION"/chromedriver_linux64.zip -P ~/ && \
+RUN wget -N https://chromedriver.storage.googleapis.com/"$CHROME_DRIVER"/chromedriver_linux64.zip -P ~/ && \
     unzip ~/chromedriver_linux64.zip -d ~/  && \
     rm ~/chromedriver_linux64.zip  && \
     mv -f ~/chromedriver /usr/local/share/ && \
@@ -31,14 +31,24 @@ RUN wget -N https://chromedriver.storage.googleapis.com/"$DRIVER_VERSION"/chrome
     rm -f /usr/local/bin/chromedriver && \
     ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 
+# Install Firefox
+RUN apt-get -qq update && \
+    apt-get -qy install firefox-esr
+
+# Install Firefox Driver
+RUN wget -O /tmp/geckodriver.tar.gz https://github.com/mozilla/geckodriver/releases/download/"$FIREFOX_DRIVER"/geckodriver-"$FIREFOX_DRIVER"-linux64.tar.gz && \
+    tar -zxf /tmp/geckodriver.tar.gz -C /usr/local/bin && \
+    rm /tmp/geckodriver.tar.gz && \
+    chmod u+x /usr/local/bin/geckodriver
+
 # Install Allure 2
 RUN apt-get -qq update && \
     apt-get install -qqy default-jre && \
     mkdir -p /opt/allure && \
-    curl -fsSL -o allure2.zip https://dl.bintray.com/qameta/generic/io/qameta/allure/allure/"$ALLURE_VERSION"/allure-"$ALLURE_VERSION".zip && \
+    curl -fsSL -o allure2.zip https://dl.bintray.com/qameta/generic/io/qameta/allure/allure/"$ALLURE"/allure-"$ALLURE".zip && \
     unzip -q allure2.zip -d /opt/allure && \
     rm allure2.zip && \
-    chmod a+x /opt/allure/allure-"$ALLURE_VERSION"/bin/allure && \
-    ln -s /opt/allure/allure-"$ALLURE_VERSION"/bin/allure /usr/bin/allure
+    chmod a+x /opt/allure/allure-"$ALLURE"/bin/allure && \
+    ln -s /opt/allure/allure-"$ALLURE"/bin/allure /usr/bin/allure
 
 CMD /usr/local/bin/codecept
