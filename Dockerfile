@@ -1,12 +1,12 @@
-FROM debian:stretch
+FROM debian:buster
 
 MAINTAINER nikita@mygento.ru
 
-ENV DEBIAN_FRONTEND=noninteractive FIREFOX_DRIVER=v0.24.0 CHROME_DRIVER=75.0.3770.8 ALLURE=2.12.1
+ENV DEBIAN_FRONTEND=noninteractive FIREFOX_DRIVER=v0.24.0 CHROME_DRIVER=76.0.3809.25 ALLURE=2.12.1
 
 RUN apt-get -qq update && \
     apt-get install -qqy curl wget unzip gnupg git && \
-    apt-get install -qqy php7.0-cli php7.0-mbstring php7.0-zip php7.0-curl php7.0-bcmath php7.0-xml
+    apt-get install -qqy php7.3-cli php7.3-mbstring php7.3-zip php7.3-curl php7.3-bcmath php7.3-xml
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
