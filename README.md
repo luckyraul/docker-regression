@@ -1,3 +1,3 @@
 # Docker image for regression testing
 
-docker run --rm -ti --network=host -v $(pwd):/root/test luckyraul/docker-regression:latest
+```docker run --rm -ti --network=host -v `pwd`:`pwd` -w `pwd` luckyraul/docker-regression:latest codecept run```
