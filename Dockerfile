@@ -5,7 +5,7 @@ MAINTAINER nikita@mygento.ru
 ENV DEBIAN_FRONTEND=noninteractive FIREFOX_DRIVER=v0.24.0 CHROME_DRIVER=75.0.3770.90 ALLURE=2.12.1
 
 RUN apt-get -qq update && \
-    apt-get install -qqy curl wget unzip gnupg git && \
+    apt-get install -qqy curl wget unzip zip gnupg git && \
     apt-get install -qqy php7.3-cli php7.3-mbstring php7.3-zip php7.3-curl php7.3-bcmath php7.3-xml
 
 # Install Composer
