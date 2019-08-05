@@ -2,10 +2,10 @@ FROM debian:buster
 
 MAINTAINER nikita@mygento.ru
 
-ENV DEBIAN_FRONTEND=noninteractive FIREFOX_DRIVER=v0.24.0 CHROME_DRIVER=75.0.3770.90 ALLURE=2.12.1
+ENV DEBIAN_FRONTEND=noninteractive FIREFOX_DRIVER=v0.24.0 CHROME_DRIVER=76.0.3809.68 ALLURE=2.12.1
 
 RUN apt-get -qq update && \
-    apt-get install -qqy curl wget unzip zip gnupg git && \
+    apt-get install -qqy curl wget unzip zip gnupg git jq && \
     apt-get install -qqy php7.3-cli php7.3-mbstring php7.3-zip php7.3-curl php7.3-bcmath php7.3-xml
 
 # Install Composer
@@ -50,5 +50,14 @@ RUN apt-get -qq update && \
     rm allure2.zip && \
     chmod a+x /opt/allure/allure-"$ALLURE"/bin/allure && \
     ln -s /opt/allure/allure-"$ALLURE"/bin/allure /usr/bin/allure
+
+# install NodeJS
+RUN apt-get -qq update && \
+    apt-get -qqy install curl gnupg \
+    && curl -sL https://deb.nodesource.com/setup_12.x | bash \
+    && apt-get -qqy install nodejs
+
+# Install Lighthouse
+RUN npm install -g lighthouse lighthouse-ci
 
 CMD /usr/local/bin/codecept
