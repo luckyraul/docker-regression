@@ -2,7 +2,7 @@ FROM debian:buster
 
 MAINTAINER nikita@mygento.ru
 
-ENV DEBIAN_FRONTEND=noninteractive FIREFOX_DRIVER=v0.24.0 CHROME_DRIVER=76.0.3809.68 ALLURE=2.12.1
+ENV DEBIAN_FRONTEND=noninteractive FIREFOX_DRIVER=v0.26.0 CHROME_DRIVER=80.0.3987.106 ALLURE=2.13.2
 
 RUN apt-get -qq update && \
     apt-get install -qqy curl wget unzip zip gnupg git jq && \
@@ -54,7 +54,7 @@ RUN apt-get -qq update && \
 # install NodeJS
 RUN apt-get -qq update && \
     apt-get -qqy install curl gnupg \
-    && curl -sL https://deb.nodesource.com/setup_12.x | bash \
+    && curl -sL https://deb.nodesource.com/setup_13.x | bash \
     && apt-get -qqy install nodejs
 
 # Install Lighthouse
