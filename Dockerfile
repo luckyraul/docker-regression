@@ -2,7 +2,7 @@ FROM debian:buster
 
 MAINTAINER nikita@mygento.ru
 
-ENV DEBIAN_FRONTEND=noninteractive FIREFOX_DRIVER=v0.26.0 CHROME_DRIVER=80.0.3987.106 ALLURE=2.13.2
+ENV DEBIAN_FRONTEND=noninteractive FIREFOX_DRIVER=v0.26.0 CHROME_DRIVER=81.0.4044.69 ALLURE=2.13.2
 
 RUN apt-get -qq update && \
     apt-get install -qqy curl wget unzip zip gnupg git jq && \
