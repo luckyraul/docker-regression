@@ -2,22 +2,22 @@ FROM debian:buster
 
 MAINTAINER nikita@mygento.ru
 
-ENV DEBIAN_FRONTEND=noninteractive FIREFOX_DRIVER=v0.26.0 CHROME_DRIVER=81.0.4044.69 ALLURE=2.13.2
+ENV DEBIAN_FRONTEND=noninteractive FIREFOX_DRIVER=v0.29.1 CHROME_DRIVER=90.0.4430.24 ALLURE=2.13.10
 
 RUN apt-get -qq update && \
     apt-get install -qqy curl wget unzip zip gnupg git jq && \
     apt-get install -qqy php7.3-cli php7.3-mbstring php7.3-zip php7.3-curl php7.3-bcmath php7.3-xml
 
 # Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    chmod a+x /usr/local/bin/composer
+RUN curl -L https://getcomposer.org/composer-1.phar -o /usr/local/bin/composer && \
+    chmod +x /usr/local/bin/composer
 
 # Install Codecept
 RUN curl -LsS http://codeception.com/codecept.phar -o /usr/local/bin/codecept && \
     chmod a+x /usr/local/bin/codecept
 
 # Install Chrome
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
     apt-get -qq update && \
     apt-get install -qqy google-chrome-stable
@@ -44,17 +44,13 @@ RUN wget -O /tmp/geckodriver.tar.gz https://github.com/mozilla/geckodriver/relea
 # Install Allure 2
 RUN apt-get -qq update && \
     apt-get install -qqy default-jre && \
-    mkdir -p /opt/allure && \
-    curl -fsSL -o allure2.zip https://dl.bintray.com/qameta/maven/io/qameta/allure/allure-commandline/"$ALLURE"/allure-commandline-"$ALLURE".zip && \
-    unzip -q allure2.zip -d /opt/allure && \
-    rm allure2.zip && \
-    chmod a+x /opt/allure/allure-"$ALLURE"/bin/allure && \
-    ln -s /opt/allure/allure-"$ALLURE"/bin/allure /usr/bin/allure
+    curl -L https://github.com/allure-framework/allure2/releases/download/"$ALLURE"/allure_"$ALLURE"-1_all.deb -o allure.deb && \
+    dpkg -i allure.deb
 
 # install NodeJS
 RUN apt-get -qq update && \
     apt-get -qqy install curl gnupg \
-    && curl -sL https://deb.nodesource.com/setup_13.x | bash \
+    && curl -sL https://deb.nodesource.com/setup_14.x | bash \
     && apt-get -qqy install nodejs
 
 # Install Lighthouse
