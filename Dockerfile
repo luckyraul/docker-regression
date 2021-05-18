@@ -2,15 +2,24 @@ FROM debian:buster
 
 MAINTAINER nikita@mygento.ru
 
-ENV DEBIAN_FRONTEND=noninteractive FIREFOX_DRIVER=v0.29.1 CHROME_DRIVER=90.0.4430.24 ALLURE=2.13.10
+ENV DEBIAN_FRONTEND=noninteractive VAULT_VERSION=1.7.0 FIREFOX_DRIVER=v0.29.1 CHROME_DRIVER=90.0.4430.24 ALLURE=2.13.10
 
 RUN apt-get -qq update && \
     apt-get install -qqy curl wget unzip zip gnupg git jq && \
     apt-get install -qqy php7.3-cli php7.3-mbstring php7.3-zip php7.3-curl php7.3-bcmath php7.3-xml
 
+RUN wget -q https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
+    unzip vault_${VAULT_VERSION}_linux_amd64.zip && \
+    mv vault /usr/local/bin/vault && \
+    chmod +x /usr/local/bin/vault && \
+    rm vault_${VAULT_VERSION}_linux_amd64.zip
+
 # Install Composer
 RUN curl -L https://getcomposer.org/composer-1.phar -o /usr/local/bin/composer && \
-    chmod +x /usr/local/bin/composer
+    chmod +x /usr/local/bin/composer && \
+    composer global require symfony/console && \
+    composer global require guzzlehttp/guzzle && \
+    rm -fR ~/.composer/cache
 
 # Install Codecept
 RUN curl -LsS http://codeception.com/codecept.phar -o /usr/local/bin/codecept && \
