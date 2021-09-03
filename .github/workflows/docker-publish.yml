@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         version:
-          - '90'
+          - '92'
     steps:
       - uses: actions/checkout@v2
       - name: Build Image
